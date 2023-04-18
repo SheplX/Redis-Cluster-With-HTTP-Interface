@@ -131,10 +131,10 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 ![webdis_get_txt_html_xml](./screenshots/webdis_get_txt_html_xml.png)
 
 - Let's check if these data are stored already inside the Redis cluster
-    - From slaves
+- From slaves
 ![slave_1-data](./screenshots/slave_1-data.png)
 ![slave_2-data](./screenshots/slave_2-data.png)
-    - From insights
+- From insights
 ![insights_keys](./screenshots/insights_keys.png)
 ![insights_keys-2](./screenshots/insights_keys-2.png)
 
@@ -151,13 +151,13 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 
 - Redis Stream
     - Let's test the Redis Stream, I will create a new stream entry with some values
-    ![stream_1](./screenshots/stream_1.png)
-    ![stream_2](./screenshots/stream_2.png)
+![stream_1](./screenshots/stream_1.png)
+![stream_2](./screenshots/stream_2.png)
     - Get the stream data
-    ![stream_get](./screenshots/stream_get.png)
+![stream_get](./screenshots/stream_get.png)
     - From insights
-    ![insights_stream](./screenshots/insights_stream.png)
-    ![insights_stream_2](./screenshots/insights_stream_2.png)
+![insights_stream](./screenshots/insights_stream.png)
+![insights_stream_2](./screenshots/insights_stream_2.png)
 
 - Redis Lists
     - Defining a list
@@ -179,7 +179,7 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 
 - Check all the connected clients for each operation
 
-![insights_clients](./screenshots/insights_clients.png)
+    ![insights_clients](./screenshots/insights_clients.png)
 
 # Failover & High Availability
 
