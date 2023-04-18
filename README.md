@@ -40,17 +40,17 @@ Each sentinel deployment is configured with a persistent volume for storing the 
     - And much more ...
 - After the Proxy service connects to sentinels and discovers the current master, we will set a Configmap for webdis socket with the proxy service:port so any coming operations, or requests will be requested during the socket it will be forwarded to the current Redis master.
 
-# Redis Insights Configurations
+# Redis Insight Configurations
 
-- To fully watch what's happening to your database, you will need Redis insights, it's a UI application that lets you check very important things like how many connections are active, what are the most common commands being used, how much memory is being used, all your stored database inside Redis, and much more. it's a very important tool for developers.
-- In my case, I need Redis insights to watch the Redis master data and all the clients which being been connected to perform operations, and check all the data inside. so we will tie Redis insights with the proxy service to do that.
+- To fully watch what's happening to your database, you will need Redis insight, it's a UI application that lets you check very important things like how many connections are active, what are the most common commands being used, how much memory is being used, all your stored database inside Redis, and much more. it's a very important tool for developers.
+- In my case, I need Redis insight to watch the Redis master data and all the clients which being been connected to perform operations, and check all the data inside. so we will tie Redis insight with the proxy service to do that.
 
 # Installation & Testing
 - To make sure that we are setting up the cluster rightly and with no errors, we must deploy each component in the order like that :
     - `Redis` - to make sure that Redis is up and running first
     - `Sentinels` - to make sure that Sentinels can discover the Redis master & workers after they are deployed without errors.
     - `Proxy` - proxy must be after Redis & sentinel deployment because it listens to the sentinel's headless services to know the current master info and then connect to it. so this will make sure that the proxy can catch up with the master without errors.
-    - `Webdis` or `Redis-Insights` then `Ingress`.
+    - `Webdis` or `Redis-Insight` then `Ingress`.
 
 ![deployment](./screenshots/deployment.png)
 
@@ -79,16 +79,16 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 
 ![proxy_master_connection](./screenshots/proxy_master_connection.png)
 
-- After making sure that the proxy is working fine, we can define it as a new database by insights
+- After making sure that the proxy is working fine, we can define it as a new database by insight
 
-![insights_new_data](./screenshots/insights_new_data.png)
-![insights_access](./screenshots/insights_access.png)
+![insight_new_data](./screenshots/insight_new_data.png)
+![insight_access](./screenshots/insight_access.png)
 
 - Test connection
 
-![insights_ping](./screenshots/insights_ping.png)
+![insight_ping](./screenshots/insight_ping.png)
 
-- So by that, we make sure that the cluster is running fine and both insights, proxy is ok.
+- So by that, we make sure that the cluster is running fine and both insight, proxy is ok.
 
 # Webdis Socket
 
@@ -102,17 +102,17 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 
 ![webdis_modules_list](./screenshots/webdis_modules_list.png)
 
-- From insights
+- From insight
 
-![insights_modules](./screenshots/insights_modules.png)
+![insight_modules](./screenshots/insight_modules.png)
 
 - To check if we connected with the current master
 
 ![webdis_master_check](./screenshots/webdis_master_check.png)
 
-- From insights
+- From insight
 
-![insights_master](./screenshots/insights_master.png)
+![insight_master](./screenshots/insight_master.png)
 
 - Let's test the socket against some operations, I will try to add some keys with values
 
@@ -134,9 +134,9 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 - From slaves
 ![slave_1-data](./screenshots/slave_1-data.png)
 ![slave_2-data](./screenshots/slave_2-data.png)
-- From insights
-![insights_keys](./screenshots/insights_keys.png)
-![insights_keys-2](./screenshots/insights_keys-2.png)
+- From insight
+![insight_keys](./screenshots/insight_keys.png)
+![insight_keys-2](./screenshots/insight_keys-2.png)
 
 - Can we write the data to a slave?
 
@@ -155,10 +155,10 @@ Each sentinel deployment is configured with a persistent volume for storing the 
     ![stream_2](./screenshots/stream_2.png)
     - Get the stream data
     ![stream_get](./screenshots/stream_get.png)
-    - From insights
+    - From insight
 
-        ![insights_stream](./screenshots/insights_stream.png)
-        ![insights_stream_2](./screenshots/insights_stream_2.png)
+        ![insight_stream](./screenshots/insight_stream.png)
+        ![insight_stream_2](./screenshots/insight_stream_2.png)
 
 - Redis Lists
     - Defining a list
@@ -175,12 +175,12 @@ Each sentinel deployment is configured with a persistent volume for storing the 
     ![list_slave-1](./screenshots/list_slave-1.png)
     ![list_slave-2](./screenshots/list_slave-2.png)
 
-- All the stored data from insights
-![insights_all_data](./screenshots/insights_all_data.png)
+- All the stored data from insight
+![insight_all_data](./screenshots/insight_all_data.png)
 
 - Check all the connected clients for each operation
 
-    ![insights_clients](./screenshots/insights_clients.png)
+    ![insight_clients](./screenshots/insight_clients.png)
 
 # Failover & High Availability
 
