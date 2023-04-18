@@ -156,8 +156,9 @@ Each sentinel deployment is configured with a persistent volume for storing the 
     - Get the stream data
     ![stream_get](./screenshots/stream_get.png)
     - From insights
-    ![insights_stream](./screenshots/insights_stream.png)
-    ![insights_stream_2](./screenshots/insights_stream_2.png)
+
+        ![insights_stream](./screenshots/insights_stream.png)
+        ![insights_stream_2](./screenshots/insights_stream_2.png)
 
 - Redis Lists
     - Defining a list
