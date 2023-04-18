@@ -151,13 +151,13 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 
 - Redis Stream
     - Let's test the Redis Stream, I will create a new stream entry with some values
-![stream_1](./screenshots/stream_1.png)
-![stream_2](./screenshots/stream_2.png)
+    ![stream_1](./screenshots/stream_1.png)
+    ![stream_2](./screenshots/stream_2.png)
     - Get the stream data
-![stream_get](./screenshots/stream_get.png)
+    ![stream_get](./screenshots/stream_get.png)
     - From insights
-![insights_stream](./screenshots/insights_stream.png)
-![insights_stream_2](./screenshots/insights_stream_2.png)
+    ![insights_stream](./screenshots/insights_stream.png)
+    ![insights_stream_2](./screenshots/insights_stream_2.png)
 
 - Redis Lists
     - Defining a list
