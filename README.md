@@ -1,4 +1,4 @@
-# Redis-Cluster
+# Redis Cluster With HTTP Interface
 Introducing Redis cluster with high availability and fault tolerance in Kubernetes and how it's possible to interact with Redis securely with an HTTP server if there are applications that require a Redis database. making it easier to interact with Redis from web applications or for developers to work with it.
 
 ![Project](./screenshots/project.png)
