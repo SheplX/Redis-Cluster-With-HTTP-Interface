@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webdis-ingress
+spec:
+  rules:
+  - host: webdis-api.redis.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix  
+        backend:
+          service:
+            name: webdis
+            port: 
+              number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: insight-ingress
+spec:
+  rules:
+  - host: insight.redis.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix  
+        backend:
+          service:
+            name: redis-insight
+            port: 
+              number: 8001
