@@ -1,0 +1,60 @@
+apiVersion: v1
+data:
+  webdis.json: "{\n\t\"redis_host\":\t\"proxy\",\n\n\t\"redis_port\":\t6379,\n\t\"redis_auth\":\tnull,\n\n\t\"http_host\":\t\"0.0.0.0\",\n\t\"http_port\":\t7379,\n\n\t\"threads\":\t5,\n\t\"pool_size\":
+    20,\n\n\t\"daemonize\":\tfalse,\n\t\"websockets\":\tfalse,\n\n\t\"database\":\t0,\n\n\t\"acl\":
+    [\n\t\t{\n\t\t\t\"disabled\":\t[\"DEBUG\"]\n\t\t},\n\n\t\t{\n\t\t\t\"http_basic_auth\":\t\"user:password\",\n\t\t\t\"enabled\":\t\t[\"DEBUG\"]\n\t\t}\n\t],\n\n\t\"verbosity\":
+    4,\n\t\"logfile\": \"/dev/stderr\"\n}\n"
+kind: ConfigMap
+metadata:
+  name: webdis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdis
+  labels:
+    app: webdis
+    name: webdis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webdis
+      name: webdis
+  template:
+    metadata:
+      name: webdis
+      labels:
+        app: webdis
+        name: webdis
+    spec:
+      containers:
+      - command: ["/usr/local/bin/webdis","/config/webdis.json"]
+        name: webdis
+        image: nicolas/webdis:latest
+        ports:
+        - containerPort: 7379
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /config
+          name: config
+      volumes:
+        - name: config
+          configMap:
+            name: webdis
+            items:
+            - key: webdis.json
+              path: webdis.json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webdis
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 7379
+  selector:
+    name: webdis
+  type: ClusterIP
