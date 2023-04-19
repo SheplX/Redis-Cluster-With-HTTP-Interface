@@ -1,0 +1,85 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-redis-insight
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 0.3Gi
+  hostPath:
+    path: /data/redis-insight
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-redis-insight
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce 
+  volumeName: pv-redis-insight
+  resources:
+    requests:
+      storage: 0.3Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: deployment-redis-insight
+  name: redis-insight
+spec:
+  ports:
+  - port: 8001
+    protocol: TCP
+    targetPort: 8001
+  selector:
+    app: deployment-redis-insight
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deployment-redis-insight
+  name: deployment-redis-insight
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-redis-insight
+  template:
+    metadata:
+      labels:
+        app: deployment-redis-insight
+    spec:
+      volumes:
+        - name: db
+          persistentVolumeClaim:
+            claimName: pvc-redis-insight
+      initContainers:
+        - name: init
+          image: busybox
+          command:
+            - /bin/sh
+            - '-c'
+            - |
+                            chown -R 1001 /db
+          resources: {}
+          volumeMounts:
+            - name: db
+              mountPath: /db
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      containers:
+        - name:  redis-insight
+          image: redislabs/redisinsight:1.12.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: db
+            mountPath: /db
+          ports:
+          - containerPort: 8001
+            protocol: TCP
