@@ -15,7 +15,7 @@ Introducing Redis cluster with high availability and fault tolerance beside Redi
 
 - Redis Sentinel is a high-availability solution for Redis. It provides automatic failover, configuration management, and monitoring for Redis clusters.
 - There are 3 Sentinel deployments each one configured with:
-    - `REDIS_MASTER` - redis master address
+    - `REDIS_MASTER` - Redis master address
     - `SENTINEL_QUORUM` - the minimum number of Sentinels that need to agree on a master pod being considered as down before initiating failover procedures. 
     - `SENTINEL_DOWN_AFTER` - the time duration in milliseconds after which a master pod will be declared as down if no response is received from it. 
     - `SENTINEL_FAILOVER` - determines the time, also in milliseconds, that sentinel instances will wait before starting a failover procedure once the master pod is deemed unresponsive.
@@ -28,7 +28,7 @@ Each sentinel deployment is configured with a persistent volume for storing the 
 # How Proxy Works
 - Proxy service will be the bridge between the client and the current Redis master. so any requests will be forwarded to the master by the proxy.
 - This is the important part to ensure that any incoming operations will be only performed by the master.
-- For letting the proxy work, it needs to be connected with the sentinels because they know who the current master & slaves are, so the proxy must ask each sentinel instance about the current master in case the master changed or been down then forward all the traffic to it.
+- For letting the proxy work, it needs to be connected with the sentinels because they know who the current master & slaves are, so the proxy must ask each sentinel instance about the current master so whenever the master changes the proxy will know it and forward all the operations to it.
 
 # Webdis API Configurations
 
